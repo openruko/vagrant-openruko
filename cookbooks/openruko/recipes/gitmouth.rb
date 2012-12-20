@@ -1,7 +1,7 @@
 git "/home/vagrant/openruko/gitmouth" do
   user "vagrant"
   group "vagrant"
-  repository "https://github.com/zyegfryed/gitmouth.git"
+  repository "https://github.com/openruko/gitmouth.git"
   action :checkout
 end
 
