@@ -1,7 +1,7 @@
 git "/home/vagrant/openruko/gitmouth" do
   user "vagrant"
   group "vagrant"
-  repository "https://github.com/openruko/gitmouth.git"
+  repository "https://github.com/zyegfryed/gitmouth.git"
   action :checkout
 end
 
@@ -12,9 +12,9 @@ bash "setup-gitmouth" do
 
   code <<-EOF
   set -e
-  if [ ! -f ./bin/activate ]; then
-	virtualenv --no-site-packages .
-	make init
+  if [ ! -f ./bin/python ]; then
+    virtualenv --distribute .
+    ./bin/python setup.py install
   fi
   rm -fr certs
   echo '' | make certs

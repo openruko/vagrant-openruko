@@ -2,4 +2,4 @@ start on starting openruko
 stop on stopping openruko
 respawn
 
-exec su - vagrant -c 'cd /home/vagrant/openruko/gitmouth; ./launch >> /var/log/openruko/gitmouth.log 2>&1'
+exec su - vagrant -c 'cd /home/vagrant/openruko/gitmouth; ./bin/gitmouth >> /var/log/openruko/gitmouth.log 2>&1'
