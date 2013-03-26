@@ -41,6 +41,13 @@ Vagrant::Config.run do |config|
     chef.json["home"] = "/home/vagrant"
     chef.json["openruko"]["home"] = "/home/vagrant/openruko"
     chef.json["openruko"]["password"] = "vagrant"
+    chef.json["s3"] = {
+      s3_key: "123",
+      s3_secret: "123",
+      s3_bucket: "openruko",
+      s3_hostname: "mymachine.me",
+      s3_port: "4567"
+    }
     chef.json["fakes3"]["user"] = "vagrant"
     chef.json["fakes3"]["group"] = "vagrant"
     chef.json["postgresql"]["password"]["vagrant"] = "vagrant"

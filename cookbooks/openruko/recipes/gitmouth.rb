@@ -1,7 +1,7 @@
 git "#{node['openruko']['home']}/gitmouth" do
   user node['user']
   group node['group']
-  repository "https://github.com/openruko/gitmouth.git"
+  repository node['openruko']['repositories']['gitmouth']
   action :checkout
   revision node["versions"]["gitmouth"]
 end

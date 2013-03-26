@@ -1,7 +1,7 @@
 git "#{node['openruko']['home']}/dynohost" do
   user node['user']
   group node['group']
-  repository "https://github.com/openruko/dynohost.git"
+  repository node['openruko']['repositories']['dynohost']
   action :checkout
   revision node["versions"]["dynohost"]
 end

@@ -7,12 +7,16 @@ setgid <%= node['group'] %>
 
 env PG_USER="<%= node['user'] %>"
 env PG_PASSWORD="<%= node['postgresql']['password'][node['user']] %>"
+<% if node['s3']['s3_hostname'] %>
 env S3_HOSTNAME="<%= node['s3']['s3_hostname'] %>"
 env S3_PORT="<%= node['s3']['s3_port'] %>"
+<% end %>
 env S3_KEY="<%= node['s3']['s3_key'] %>"
 env S3_SECRET="<%= node['s3']['s3_secret'] %>"
 env S3_BUCKET="<%= node['s3']['s3_bucket'] %>"
 env APISERVER_KEY="<%= node['openruko']['apiserver_key'] %>"
+env LOGPLEX_HOST="<%= node['openruko']['host'] %>"
+env APISERVER_HOST="<%= node['openruko']['host'] %>"
 
 chdir <%= node['openruko']['home'] %>/apiserver
 

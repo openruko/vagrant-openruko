@@ -30,6 +30,7 @@
     "home": "/home/rukosan",
 
     "openruko": {
+      "host": "mymachine.me",
       "home": "/home/rukosan/openruko",
       "passsword": "rukosan",
       "apiserver_key": "ec1a8eb9-18a6-42c2-81ec-c0f0f615280c"
@@ -51,9 +52,9 @@
     "postgresql": {
       "version": "9.1",
       "listen_addresses": "*",
-      "hba": [
-        { "method": "trust", "address": "0.0.0.0/0" },
-        { "method": "trust", "address": "::1/0" }
+      "pg_hba": [
+        { "type": "host", "db": "all", "user": "all", "addr": "0.0.0.0/0", "method": "md5" },
+        { "type": "host", "db": "all", "user": "all", "addr": "::1/0", "method": "md5" }
       ],
       "password": {
         "postgres": "password",
