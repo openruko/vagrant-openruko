@@ -1,7 +1,7 @@
 git "#{node['openruko']['home']}/logplex" do
   user node['user']
   group node['group']
-  repository "https://github.com/openruko/logplex.git"
+  repository node['openruko']['repositories']['logplex']
   action :checkout
   revision node["versions"]["logplex"]
 end
