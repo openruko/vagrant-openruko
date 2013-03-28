@@ -14,16 +14,16 @@ directory node['openruko']['home'] do
   mode 0755
 end
 
-bash "setup mymachine.me domain" do
+bash "setup #{node['openruko']['host']} domain" do
   user "root"
   code <<-EOF
-  echo "127.0.0.1 mymachine.me" >> /etc/hosts
-  echo "127.0.0.1 openruko.mymachine.me" >> /etc/hosts
-  echo "127.0.0.1 hello-world.mymachine.me" >> /etc/hosts
-  echo "127.0.0.1 keepgreen.mymachine.me" >> /etc/hosts
+  echo "127.0.0.1 #{node['openruko']['host']}" >> /etc/hosts
+  echo "127.0.0.1 openruko.#{node['openruko']['host']}" >> /etc/hosts
+  echo "127.0.0.1 hello-world.#{node['openruko']['host']}" >> /etc/hosts
+  echo "127.0.0.1 keepgreen.#{node['openruko']['host']}" >> /etc/hosts
   EOF
 
-  not_if "grep 'mymachine.me' /etc/hosts"
+  not_if "grep '#{node['openruko']['host']}' /etc/hosts"
 end
 
 template "/etc/profile.d/openruko.sh" do

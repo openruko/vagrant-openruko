@@ -1,7 +1,7 @@
 git "#{node['openruko']['home']}/client" do
   user node['user']
   group node['group']
-  repository "https://github.com/openruko/client.git"
+  repository node['openruko']['repositories']['client']
   action :checkout
   revision node["versions"]["client"]
 end
