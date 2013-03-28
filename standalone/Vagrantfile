@@ -1,7 +1,5 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
 root      = File.expand_path("..", __FILE__)
-solo_json = File.join(root, "solo.json")
+solo_json = File.join(root, "../solo.json")
 
 Vagrant::Config.run do |config|
   config.vm.box = "precise64"
@@ -14,11 +12,11 @@ Vagrant::Config.run do |config|
   # Allow access to the VM's IP from host
   config.vm.network :bridged
 
-  config.vm.share_folder "chef", "~/chef", "."
+  config.vm.share_folder "chef", "~/chef", "../"
 
   # First apply proxy recipe
   config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = 'cookbooks'
+    chef.cookbooks_path = '../cookbooks'
 
     chef.add_recipe 'proxy'
     chef.json = {
@@ -31,7 +29,7 @@ Vagrant::Config.run do |config|
   end
 
   config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = 'cookbooks'
+    chef.cookbooks_path = '../cookbooks'
 
     chef.json = JSON.parse(File.open(solo_json, &:read))
 
@@ -64,4 +62,4 @@ end
 # openruko with;
 # config.vm.share_folder "openruko", "/home/rukosan/openruko_mount", "~/Software/openruko"
 # Then symlink the various repos you're hacking on to see changes straight away on the live box.
-load "./Vagrantfile.local" if File.exists? "Vagrantfile.local"
+load "../Vagrantfile.local" if File.exists? "../Vagrantfile.local"

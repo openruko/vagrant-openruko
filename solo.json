@@ -6,10 +6,17 @@
       "recipe[postgresql::client]",
       "recipe[postgresql::server]",
       "recipe[git]",
-      "recipe[nodejs::install_from_package]",
-      "recipe[fakes3]",
       "recipe[python]",
-      "recipe[openruko]",
+      "recipe[nodejs::install_from_package]",
+      "recipe[openruko::default]",
+      "recipe[openruko::apiserver]",
+      "recipe[openruko::logplex]",
+      "recipe[openruko::httprouting]",
+      "recipe[openruko::gitmouth]",
+      "recipe[openruko::client]",
+      "recipe[openruko::integration-tests]",
+      "recipe[openruko::dynohost]",
+      "recipe[fakes3]",
       "recipe[heroku-toolbelt]"
     ],
 
@@ -33,14 +40,18 @@
       "host": "mymachine.me",
       "home": "/home/rukosan/openruko",
       "passsword": "rukosan",
-      "apiserver_key": "ec1a8eb9-18a6-42c2-81ec-c0f0f615280c"
+      "apiserver_key": "ec1a8eb9-18a6-42c2-81ec-c0f0f615280c",
+      "apiserver_host": "openruko.local",
+      "apiserver_ip": "127.0.0.1",
+      "dev_domain": "openruko.local",
+      "live_domain": "openruko.com"
     },
 
     "s3": {
       "s3_key": "123",
       "s3_secret": "123",
       "s3_bucket": "openruko",
-      "s3_hostname": "mymachine.me",
+      "s3_hostname": "openruko.local",
       "s3_port": "4567"
     },
 
@@ -63,8 +74,10 @@
     },
 
     "nodejs": {
+
       "version": "0.8.6",
       "npm": "1.1.48",
       "legacy_packages": true
     }
+
 }

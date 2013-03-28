@@ -1,5 +1,11 @@
-start on starting openruko
-stop on stopping openruko
+start on (started network-interface
+          or started network-manager
+          or started networking)
+
+stop on (stopping network-interface
+         or stopping network-manager
+         or stopping networking)
+
 respawn
 
 setuid <%= node['user'] %>
@@ -15,8 +21,8 @@ env S3_KEY="<%= node['s3']['s3_key'] %>"
 env S3_SECRET="<%= node['s3']['s3_secret'] %>"
 env S3_BUCKET="<%= node['s3']['s3_bucket'] %>"
 env APISERVER_KEY="<%= node['openruko']['apiserver_key'] %>"
-env LOGPLEX_HOST="<%= node['openruko']['host'] %>"
-env APISERVER_HOST="<%= node['openruko']['host'] %>"
+env APISERVER_HOST="<%= node['openruko']['apiserver_host'] %>"
+env LOGPLEX_HOST="<%= node['openruko']['apiserver_host'] %>"
 
 chdir <%= node['openruko']['home'] %>/apiserver
 

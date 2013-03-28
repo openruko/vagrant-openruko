@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This is used by non-vagrant environments.
+
 PATH=$PATH:/var/lib/gems/1.9.1/bin
 
 chef_version="10.20"

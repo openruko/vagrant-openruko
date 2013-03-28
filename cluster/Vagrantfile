@@ -1,0 +1,78 @@
+root      = File.expand_path("..", __FILE__)
+solo_json = File.join(root, "../solo.json")
+
+Vagrant::Config.run do |config|
+  config.vm.box = "precise64"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  # Or use the Travis CI environment to fix Travis-specific buidl failures
+  # See http://ruby-journal.com/debug-your-failed-test-in-travis-ci/ for more info
+  #config.vm.box = "travis-ruby"
+
+  config.vm.share_folder "chef", "~/chef", "."
+
+  ######################
+  # Api node definition
+  ######################
+  config.vm.define :api do |api_config|
+
+    api_config.vm.forward_port 80, 8888
+    api_config.vm.network :hostonly, "10.10.10.100"
+
+    # First apply proxy recipe
+    api_config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = '../cookbooks'
+
+      chef.add_recipe 'proxy'
+      chef.json = {
+        :proxy => {
+          :http_proxy => ENV['HTTP_PROXY'],
+          :https_proxy => ENV['HTTPS_PROXY'],
+          :no_proxy => "mymachine.me," + (ENV['NO_PROXY'] || '')
+        }
+      }
+    end
+
+    api_config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = '../cookbooks'
+
+      chef.json = JSON.parse(File.open(solo_json, &:read))
+      chef.json["run_list"].reject! { |r| r == 'recipe[openruko::dynohost]' }
+      chef.json["run_list"].each do |recipe_name|
+        chef.add_recipe recipe_name
+      end
+    end
+
+  end
+
+
+  ###########################
+  # Dynohost node definition
+  ###########################
+  config.vm.define :dynohost do |dynohost_config|
+
+    dynohost_config.vm.network :hostonly, "10.10.10.101"
+
+    dynohost_config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = '../cookbooks'
+
+      chef.json = JSON.parse(File.open(solo_json, &:read))
+      chef.json["openruko"]["apiserver_ip"] = "10.10.10.100"
+      chef.json['run_list'] = [
+        'recipe[openruko::default]',
+        'recipe[openruko::dynohost]'
+      ]
+      chef.json["run_list"].each do |recipe_name|
+        chef.add_recipe recipe_name
+      end
+    end
+  end
+
+end
+
+# If you want to do some funky custom stuff to your box, but don't want those things tracked by git,
+# add a Vagrantfile.local and it will be included. For example you could mount your dev version of
+# openruko with;
+# config.vm.share_folder "openruko", "/home/rukosan/openruko_mount", "~/Software/openruko"
+# Then symlink the various repos you're hacking on to see changes straight away on the live box.
+load "../Vagrantfile.local" if File.exists? "../Vagrantfile.local"

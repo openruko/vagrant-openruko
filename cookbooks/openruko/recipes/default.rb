@@ -1,57 +1,52 @@
-package "expect"
+include_recipe "apt"
+include_recipe "build-essential"
+include_recipe "git"
+include_recipe "nodejs::install_from_package"
+
+package "libssl0.9.8"
+package "uuid-dev"
 package "curl"
 package "wget"
-package "socat"
-package "postgresql-server-dev-9.1"
-package "postgresql-contrib-9.1"
-package "uuid-dev"
-package "libssl0.9.8"
-package "lxc"
+package "ruby1.9.1"
+
+
+bash "setup-local-domains" do
+  user  "root"
+  code <<-EOF
+  echo "127.0.0.1 slotbox.local" >> /etc/hosts
+  echo "#{node['openruko']['apiserver_ip']} slotbox-nodejs-hello-world.slotbox.local" >> /etc/hosts
+  echo "#{node['openruko']['apiserver_ip']} #{node['openruko']['apiserver_host']}" >> /etc/hosts
+  echo "#{node['openruko']['apiserver_ip']} openruko.#{node['openruko']['apiserver_host']} # fakes3 host" >> /etc/hosts
+  EOF
+
+  not_if "grep '#{node['openruko']['apiserver_host']}' /etc/hosts"
+end
+
+bash "setup-apiserver" do
+  code <<-EOF
+  sudo su - -c "echo \\"rukosan ALL=(ALL) NOPASSWD: ALL\\" >> /etc/sudoers"
+  EOF
+end
+
+group node['group'] do
+end
+
+user node['user'] do
+  gid node['group']
+  home "/home/" + node['user']
+  supports :manage_home => true
+  shell "/bin/bash"
+  comment "Rukosan"
+end
 
 directory node['openruko']['home'] do
-  user node['user']
+  owner node['user']
   group node['group']
   mode 0755
 end
 
-bash "setup #{node['openruko']['host']} domain" do
-  user "root"
-  code <<-EOF
-  echo "127.0.0.1 #{node['openruko']['host']}" >> /etc/hosts
-  echo "127.0.0.1 openruko.#{node['openruko']['host']}" >> /etc/hosts
-  echo "127.0.0.1 hello-world.#{node['openruko']['host']}" >> /etc/hosts
-  echo "127.0.0.1 keepgreen.#{node['openruko']['host']}" >> /etc/hosts
-  EOF
-
-  not_if "grep '#{node['openruko']['host']}' /etc/hosts"
-end
-
-template "/etc/profile.d/openruko.sh" do
-  source "profile-openruko.erb"
-  owner "root"
-  group "root"
+directory "/var/log/openruko" do
+  owner node['user']
+  group node['group']
   mode 0755
-end
-
-template "/etc/init/openruko.conf" do
-  source "upstart-openruko.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-end
-
-include_recipe "openruko::apiserver"
-include_recipe "openruko::httprouting"
-include_recipe "openruko::dynohost"
-include_recipe "openruko::logplex"
-include_recipe "openruko::rukorun"
-include_recipe "openruko::codonhooks"
-include_recipe "openruko::gitmouth"
-include_recipe "openruko::client"
-include_recipe "openruko::integration-tests"
-
-service "openruko" do
-  provider Chef::Provider::Service::Upstart
-  supports :restart => true, :start => true, :stop => true
-  action [:enable, :start]
 end

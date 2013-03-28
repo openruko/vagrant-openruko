@@ -1,6 +1,6 @@
 pre-start script
   touch /var/log/fakes3.log
-  chown <%= node['fakes3']['user'] %>. /var/log/fakes3.log
+  chown <%= node['fakes3']['user'] %> /var/log/fakes3.log
 end script
 
 start on (started network-interface

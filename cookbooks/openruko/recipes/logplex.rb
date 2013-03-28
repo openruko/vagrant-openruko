@@ -1,3 +1,6 @@
+##########
+# Logplex
+##########
 git "#{node['openruko']['home']}/logplex" do
   user node['user']
   group node['group']

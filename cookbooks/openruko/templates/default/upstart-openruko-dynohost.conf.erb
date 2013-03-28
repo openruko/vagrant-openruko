@@ -1,10 +1,17 @@
-start on starting openruko
-stop on stopping openruko
+start on (started network-interface
+          or started network-manager
+          or started networking)
+
+stop on (stopping network-interface
+         or stopping network-manager
+         or stopping networking)
 respawn
 
 env RUKORUN_PATH="<%= node['openruko']['home'] %>/rukorun"
 env CODONHOOKS_PATH="<%= node['openruko']['home'] %>/codonhooks"
 env APISERVER_KEY="<%= node['openruko']['apiserver_key'] %>"
+env APISERVER_HOST="<%= node['openruko']['apiserver_host'] %>"
+env LOGPLEX_HOST="<%= node['openruko']['apiserver_host'] %>"
 
 chdir <%= node['openruko']['home'] %>/dynohost
 
