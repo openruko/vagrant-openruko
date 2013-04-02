@@ -25,10 +25,10 @@
       "client": "v0.1.1",
       "codonhooks": "v0.1.1",
       "dynohost": "v0.1.1",
-      "httprouting": "16e5c4011938f3964ed3bcaadca30fb58851f3a1",
+      "httprouting": "v0.1.1",
       "integration-tests": "v0.1.1",
       "logplex": "v0.1.0",
-      "gitmouth": "v0.1.1",
+      "gitmouth": "v0.1.2",
       "rukorun": "v0.1.1"
     },
 
