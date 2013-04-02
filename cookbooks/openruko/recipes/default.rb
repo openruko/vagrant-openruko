@@ -13,8 +13,6 @@ package "ruby1.9.1"
 bash "setup-local-domains" do
   user  "root"
   code <<-EOF
-  echo "127.0.0.1 slotbox.local" >> /etc/hosts
-  echo "#{node['openruko']['apiserver_ip']} slotbox-nodejs-hello-world.slotbox.local" >> /etc/hosts
   echo "#{node['openruko']['apiserver_ip']} #{node['openruko']['apiserver_host']}" >> /etc/hosts
   echo "#{node['openruko']['apiserver_ip']} openruko.#{node['openruko']['apiserver_host']} # fakes3 host" >> /etc/hosts
   EOF

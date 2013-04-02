@@ -21,14 +21,14 @@
     ],
 
     "versions" : {
-      "apiserver": "v0.1.2",
+      "apiserver": "v0.2.0",
       "client": "v0.1.1",
       "codonhooks": "v0.1.1",
-      "dynohost": "v0.1.1",
-      "httprouting": "16e5c4011938f3964ed3bcaadca30fb58851f3a1",
-      "integration-tests": "v0.1.1",
+      "dynohost": "v0.2.0",
+      "httprouting": "v0.2.1",
+      "integration-tests": "v0.1.4",
       "logplex": "v0.1.0",
-      "gitmouth": "v0.1.1",
+      "gitmouth": "v0.1.2",
       "rukorun": "v0.1.1"
     },
 
