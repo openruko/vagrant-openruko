@@ -1,5 +1,4 @@
-root      = File.expand_path("..", __FILE__)
-solo_json = File.join(root, "../solo.json")
+require File.join(File.dirname(__FILE__), "..", "vagrant_common")
 
 Vagrant::Config.run do |config|
   config.vm.box = "precise64"
@@ -14,24 +13,12 @@ Vagrant::Config.run do |config|
 
   config.vm.share_folder "chef", "~/chef", "../"
 
-  # First apply proxy recipe
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = '../cookbooks'
 
-    chef.add_recipe 'proxy'
-    chef.json = {
-      :proxy => {
-        :http_proxy => ENV['HTTP_PROXY'],
-        :https_proxy => ENV['HTTPS_PROXY'],
-        :no_proxy => "mymachine.me," + (ENV['NO_PROXY'] || '')
-      }
-    }
-  end
-
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = '../cookbooks'
-
-    chef.json = JSON.parse(File.open(solo_json, &:read))
+    # First apply proxy recipe
+    proxy_set(chef)
+    json_load(chef)
 
     # Override solo.json to use vagrant user
     chef.json["user"] = "vagrant"
