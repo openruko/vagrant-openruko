@@ -78,6 +78,8 @@ EOF
 $ git add -A
 $ git commit -m 'fisrt commit'
 
+$ ~/openruko/client/openruko keys:add
+
 $ ~/openruko/client/openruko create myapp
 # email: openruko@openruko.com
 # Password: rukosan
