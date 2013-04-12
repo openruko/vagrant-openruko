@@ -2,6 +2,7 @@
 .vagrant
 chef-stacktrace.out
 Vagrantfile.local
+solo.local.json
 distribute-*
 distribute_setup.py
 npm-debug.log
