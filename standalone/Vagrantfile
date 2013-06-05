@@ -11,7 +11,7 @@ Vagrant::Config.run do |config|
   # Allow access to the VM's IP from host
   config.vm.network :bridged
 
-  config.vm.share_folder "chef", "~/chef", "../"
+  config.vm.share_folder "chef", "/chef", "../"
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = '../cookbooks'
