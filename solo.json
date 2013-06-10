@@ -21,15 +21,15 @@
     ],
 
     "versions" : {
-      "apiserver": "v0.2.0",
+      "apiserver": "v0.2.1",
       "client": "v0.1.1",
       "codonhooks": "v0.1.1",
-      "dynohost": "v0.2.0",
+      "dynohost": "v0.2.1",
       "httprouting": "v0.2.1",
       "integration-tests": "v0.1.4",
       "logplex": "v0.1.0",
       "gitmouth": "v0.1.2",
-      "rukorun": "v0.1.1"
+      "rukorun": "v0.1.2"
     },
 
     "user": "rukosan",
