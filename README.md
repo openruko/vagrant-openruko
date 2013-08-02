@@ -55,6 +55,15 @@ export HTTPS_PROXY=http://proxy.xxx:3128
 export NO_PROXY=localhost
 ```
 
+Connect to the server with SSH, and create a new openruko user
+
+```
+$ ~/openruko/apiserver/bin/adduser
+# email: openruko@openruko.com
+# Password: rukosan
+$ exit
+```
+
 Connect to the server with SSH, and create a new project (we will use node.js)
 
 ```
@@ -79,10 +88,10 @@ $ git add -A
 $ git commit -m 'fisrt commit'
 
 $ ~/openruko/client/openruko keys:add
-
-$ ~/openruko/client/openruko create myapp
 # email: openruko@openruko.com
 # Password: rukosan
+
+$ ~/openruko/client/openruko create myapp
 
 $ git push heroku master
 $ curl http://myapp.mymachine.me:8080/
